@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Victim\'s simulator</string>
+    <string name="time">Time</string>
+    <string name="beat">Beat</string>
+    <string name="start">Start</string>
+    <string name="stop">Pause</string>
+    <string name="reset">Reset</string>
+    <string name="systolic_pressure">SYS</string>
+    <string name="diastolic_pressure">DIA</string>
+    <string name="_0">0</string>
+    <string name="nawr_t_kapilarny">NAWRÓT KAPILARNY</string>
+    <string name="oddech_w_na_minute">ODDECHÓW NA MINUTE</string>
+</resources>
