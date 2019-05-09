@@ -4,9 +4,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.CountDownTimer;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.SystemClock;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,15 +22,23 @@ import android.widget.Toast;
 import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.Scanner;
 import java.util.Timer;
 
 import static android.widget.Toast.LENGTH_LONG;
@@ -43,54 +54,100 @@ public class StartMenu extends Activity {
     final String LOG_TAG = "myLogs";
 
 
+    final String DIR_SD = "psDownload";
+    final String FILENAME_SD = "dane.txt";
+
+    private String filename = "dane.txt";
+    private String filepath = "psDownload";
+    File myExternalFile;
+    String myData = "";
+
 
     int beats [] = {81,80,79,75,73,72,70,71,69,68};
     int sys [] = {121,120,120,118,119,117,115,111,104,100};
     int dia [] = {80,82,84,89,94,85,81,78,73,70};
-    List<String> textRead = new ArrayList<String >();
+    List<String> beatArray = new ArrayList<String>();
+    List<String> systolicArray = new ArrayList<String>();
+    List<String> diastolicArray = new ArrayList<String>();
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
         runTimer();
     }
 
     public void StartSim(View view) {
-
-        if (uri == null) {
-            Toast.makeText(this,"OPEN THE FILE",LENGTH_LONG).show();
-        } else {
-            InputStream is = null;
+        File sdcard = Environment.getExternalStorageDirectory();
+        File dir = new File(sdcard.getAbsolutePath() + "/psDownload/");
+        if(dir.exists()) {
+            File heartbeat = new File(dir, "dane.txt");
+            FileOutputStream os = null;
+            StringBuilder text = new StringBuilder();
             try {
-
-                // открываем поток для чтения
-                is = getContentResolver().openInputStream(uri);
-                BufferedReader br = new BufferedReader(new InputStreamReader(is));
-                // List<String> readText = new ArrayList<>();
-
-                String str = "";
-                // читаем содержимое
-                while ((str = br.readLine()) != null) {
-                    Log.d(LOG_TAG, str);
-                    //  Toast.makeText(getBaseContext(), str,Toast.LENGTH_SHORT).show();
-                    //txt.setText(str);
-                    textRead = Arrays.asList(str.trim().split(","));
+                BufferedReader br = new BufferedReader(new FileReader(heartbeat));
+                String line;
+                while ((line = br.readLine())!= null) {
+                    text.append(line);
+                    text.append('\n');
+                    beatArray = Arrays.asList(line.trim().split(","));
 
                 }
-
+                br.close();
             } catch (IOException e) {
-                e.printStackTrace();
+                //You'll need to add proper error handling here
             }
+            File systolic = new File(dir, "systolicPress.txt");
+            StringBuilder text1 = new StringBuilder();
+
+            try {
+                BufferedReader br = new BufferedReader(new FileReader(systolic));
+                String line;
+                while ((line = br.readLine())!= null) {
+                    text1.append(line);
+                    text1.append('\n');
+                    systolicArray = Arrays.asList(line.trim().split(","));
+
+                }
+                br.close();
+            } catch (IOException e) {
+                //You'll need to add proper error handling here
+            }
+            running = true;
         }
-        Toast.makeText(this,valueOf(textRead.size()),LENGTH_LONG).show();
-
-        running = true;
-
     }
+
+//    public void StartSim(View view) {
+////        if (uri == null) {
+////            Toast.makeText(this,"OPEN THE FILE",LENGTH_LONG).show();
+////        } else {
+//            InputStream is = null;
+//            try {
+//
+//                // открываем поток для чтения
+//                is = getContentResolver().openInputStream(uri);
+//
+//                BufferedReader br = new BufferedReader(new InputStreamReader(is));
+//                // List<String> readText = new ArrayList<>();
+//
+//                String str = "";
+//                // читаем содержимое
+//                while ((str = br.readLine()) != null) {
+//                    Log.d(LOG_TAG, str);
+//                    Toast.makeText(getBaseContext(), str,Toast.LENGTH_SHORT).show();
+//                    //txt.setText(str);
+//                    textRead = Arrays.asList(str.trim().split(","));
+//
+//                }
+//            }
+//                catch(IOException e){
+//                    e.printStackTrace();
+//                }
+//                running = true;
+//    }
+
     public void StopSim(View view) {
     running=false;
     }
@@ -121,12 +178,15 @@ public class StartMenu extends Activity {
                 }
                 handler.postDelayed(this,1000);
 
-                if(textRead.size()==seconds)
+                if(beatArray.size()==seconds)
                 {
                     running=false;
                     seconds=0;
                 }else {
-                    bts.setText(valueOf(textRead.get(seconds))+" bpm");
+                    bts.setText(valueOf(beatArray.get(seconds))+" bpm");
+                    systolic.setText(valueOf(systolicArray.get(seconds)));
+                    diastolic.setText(valueOf(dia[seconds]));
+
                 }
 
 //                if(sys.length==seconds && dia.length==seconds){
@@ -134,9 +194,8 @@ public class StartMenu extends Activity {
 //                    seconds=0;
 //                }
 //                else{
-//                    systolic.setText(valueOf(sys[seconds]));
+//                    systolic.setText(valueOf(systolicArray.get(seconds)));
 //                    diastolic.setText(valueOf(dia[seconds]));
-//
 //                }
 
             }
