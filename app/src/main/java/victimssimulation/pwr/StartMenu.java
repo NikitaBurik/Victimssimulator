@@ -63,12 +63,14 @@ public class StartMenu extends Activity {
     String myData = "";
 
 
-    int beats [] = {81,80,79,75,73,72,70,71,69,68};
-    int sys [] = {121,120,120,118,119,117,115,111,104,100};
-    int dia [] = {80,82,84,89,94,85,81,78,73,70};
+//    int beats [] = {81,80,79,75,73,72,70,71,69,68};
+//    int sys [] = {121,120,120,118,119,117,115,111,104,100};
+//    int dia [] = {80,82,84,89,94,85,81,78,73,70};
     List<String> beatArray = new ArrayList<String>();
     List<String> systolicArray = new ArrayList<String>();
     List<String> diastolicArray = new ArrayList<String>();
+    List<String> breathArray = new ArrayList<String>();
+    List<String> capArray = new ArrayList<String>();
 
 
 
@@ -83,15 +85,18 @@ public class StartMenu extends Activity {
         File sdcard = Environment.getExternalStorageDirectory();
         File dir = new File(sdcard.getAbsolutePath() + "/psDownload/");
         if(dir.exists()) {
-            File heartbeat = new File(dir, "dane.txt");
-            FileOutputStream os = null;
-            StringBuilder text = new StringBuilder();
+            File heartbeat = new File(dir, "heartBeat.txt");
+            //FileOutputStream os = null;
+
+            ////////////////////// PUTTING DATA FROM TEXT FILES .txt /////////////////////
+
+            StringBuilder heartText = new StringBuilder();
             try {
                 BufferedReader br = new BufferedReader(new FileReader(heartbeat));
                 String line;
                 while ((line = br.readLine())!= null) {
-                    text.append(line);
-                    text.append('\n');
+                    heartText.append(line);
+                    heartText.append('\n');
                     beatArray = Arrays.asList(line.trim().split(","));
 
                 }
@@ -99,15 +104,16 @@ public class StartMenu extends Activity {
             } catch (IOException e) {
                 //You'll need to add proper error handling here
             }
+
             File systolic = new File(dir, "systolicPress.txt");
-            StringBuilder text1 = new StringBuilder();
+            StringBuilder systolicText = new StringBuilder();
 
             try {
                 BufferedReader br = new BufferedReader(new FileReader(systolic));
                 String line;
                 while ((line = br.readLine())!= null) {
-                    text1.append(line);
-                    text1.append('\n');
+                    systolicText.append(line);
+                    systolicText.append('\n');
                     systolicArray = Arrays.asList(line.trim().split(","));
 
                 }
@@ -115,8 +121,61 @@ public class StartMenu extends Activity {
             } catch (IOException e) {
                 //You'll need to add proper error handling here
             }
-            running = true;
+
+            File diastolic = new File(dir, "diastolicPress.txt");
+            StringBuilder diastolicText = new StringBuilder();
+
+            try {
+                BufferedReader br = new BufferedReader(new FileReader(diastolic));
+                String line;
+                while ((line = br.readLine())!= null) {
+                    diastolicText.append(line);
+                    diastolicText.append('\n');
+                    diastolicArray = Arrays.asList(line.trim().split(","));
+
+                }
+                br.close();
+            } catch (IOException e) {
+                //You'll need to add proper error handling here
+            }
+
+            File breathing = new File(dir, "breathing.txt");
+            StringBuilder breatheText = new StringBuilder();
+
+            try {
+                BufferedReader br = new BufferedReader(new FileReader(breathing));
+                String line;
+                while ((line = br.readLine())!= null) {
+                    breatheText.append(line);
+                    breatheText.append('\n');
+                    breathArray = Arrays.asList(line.trim().split(","));
+
+                }
+                br.close();
+            } catch (IOException e) {
+                //You'll need to add proper error handling here
+            }
+
+            File capilarRefill = new File(dir, "capilarRefill.txt");
+            StringBuilder capilarText = new StringBuilder();
+
+            try {
+                BufferedReader br = new BufferedReader(new FileReader(capilarRefill));
+                String line;
+                while ((line = br.readLine())!= null) {
+                    capilarText.append(line);
+                    capilarText.append('\n');
+                    capArray = Arrays.asList(line.trim().split(","));
+
+                }
+                br.close();
+            } catch (IOException e) {
+                //You'll need to add proper error handling here
+            }
+
+            ////////////////////// PUTTING DATA FROM TEXT FILES .txt /////////////////////
         }
+        running = true;
     }
 
 //    public void StartSim(View view) {
@@ -163,6 +222,9 @@ public class StartMenu extends Activity {
         final TextView bts = findViewById(R.id.beat);
         final TextView systolic = findViewById(R.id.sysstolic);
         final TextView diastolic = findViewById(R.id.diastolic);
+        final TextView breathing = findViewById(R.id.breath);
+        final TextView capilarText = findViewById(R.id.capilar);
+
 
 
         final Handler handler = new Handler();
@@ -185,8 +247,9 @@ public class StartMenu extends Activity {
                 }else {
                     bts.setText(valueOf(beatArray.get(seconds))+" bpm");
                     systolic.setText(valueOf(systolicArray.get(seconds)));
-                    diastolic.setText(valueOf(dia[seconds]));
-
+                    diastolic.setText(valueOf(diastolicArray.get(seconds)));
+                    breathing.setText(valueOf(breathArray.get(seconds)));
+                    capilarText.setText(valueOf(capArray.get(seconds)));
                 }
 
 //                if(sys.length==seconds && dia.length==seconds){
