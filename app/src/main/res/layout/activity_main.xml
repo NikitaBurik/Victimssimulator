@@ -1,276 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/yelll"
-    tools:context=".StartMenu">
+    android:padding="@dimen/activity_horizontal_margin"
+    tools:context=".BluetoothActivity">
 
-    <TextView
-        android:id="@+id/time"
-        android:layout_width="421dp"
-        android:layout_height="37dp"
-        android:gravity="center"
-        android:text="@string/time"
-        android:textSize="20sp" />
-
-    <TableRow
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center">
-
-        <Button
-            android:id="@+id/start"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="StartSim"
-            android:text="@string/start"
-            android:textSize="18sp" />
-
-        <Button
-            android:id="@+id/pause"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="StopSim"
-            android:text="@string/stop"
-            android:textSize="18sp" />
-
-        <Button
-            android:id="@+id/reset"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="ResetSim"
-            android:text="@string/reset"
-            android:textSize="18sp" />
-
-        <Button
-            android:id="@+id/open"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="OpenSim"
-            android:text="@string/open"
-            android:textSize="18sp" />
-
-    </TableRow>
-
-    <TableRow
-        android:layout_width="match_parent"
-        android:layout_height="107dp"
-        android:background="@drawable/back">
-
-        <pl.droidsonroids.gif.GifImageView
-            android:layout_width="130dp"
-            android:layout_height="match_parent"
-            android:src="@drawable/heartbeating" />
+        android:layout_height="0dp"
+        android:layout_weight="0.2"
+        android:orientation="vertical">
 
         <TextView
-            android:id="@+id/beat"
-            android:layout_width="284dp"
-            android:layout_height="match_parent"
-            android:gravity="center|left"
-            android:text="@string/beat"
-            android:textSize="60sp" />
-
-    </TableRow>
-
-
-    <TableRow
-        android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:background="@drawable/back">
-
-        <ImageView
-            android:layout_width="130dp"
-            android:layout_height="match_parent"
-            android:padding="10dp"
-            android:src="@drawable/pressure" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/systolic_pressure"
-                    android:textSize="40dp" />
-
-                <TextView
-                    android:id="@+id/sysstolic"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="0"
-                    android:textSize="40sp" />
-
-            </TableRow>
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_width="73dp"
-                    android:layout_height="wrap_content"
-                    android:text="@string/diastolic_pressure"
-                    android:textSize="40dp" />
-
-                <TextView
-                    android:id="@+id/diastolic"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="0"
-                    android:textSize="40sp" />
-
-
-            </TableRow>
-
-        </LinearLayout>
-
-    </TableRow>
-
-    <TableRow
-        android:layout_width="match_parent"
-        android:layout_height="107dp"
-        android:background="@drawable/back">
-
-        <ImageView
-            android:layout_width="130dp"
-            android:layout_height="match_parent"
-            android:src="@drawable/lungss" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/krona_one"
-                    android:gravity="center"
-                    android:text="@string/oddech_w_na_minute"
-                    android:textSize="16sp" />
-
-            </TableRow>
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:id="@+id/breath"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="@string/_0"
-                    android:textSize="50sp" />
-
-            </TableRow>
-
-        </LinearLayout>
-
-    </TableRow>
-
-    <TableRow
-        android:layout_width="match_parent"
-        android:layout_height="107dp"
-        android:background="@drawable/back">
-
-        <ImageView
-            android:layout_width="130dp"
-            android:layout_height="match_parent"
-            android:src="@drawable/finga" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/anton"
-                    android:gravity="center"
-                    android:text="@string/nawr_t_kapilarny"
-                    android:textSize="20sp" />
-
-            </TableRow>
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:id="@+id/capilar"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="@string/_0"
-                    android:textSize="50sp" />
-
-            </TableRow>
-
-        </LinearLayout>
-
-    </TableRow>
-
-    <TableRow
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/back">
-
-        <LinearLayout
+            android:id="@+id/example"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:text="GREAT COUNTER" />
 
-            <TableRow
+        <TextView
+            android:id="@+id/status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Not Connected" />
+
+        <TextView
+            android:id="@+id/time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="time" />
+
+        <Button
+            android:id="@+id/btn_connect"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Connect" />
+        <Button
+            android:id="@+id/start_timer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Start Timer" />
+
+
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.7" />
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.1"
+        android:orientation="horizontal">
+
+
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/input_layout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="0.8">
+
+
+
+            <EditText
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:hint="Input some text" />
+        </android.support.design.widget.TextInputLayout>
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/anton"
-                    android:gravity="center"
-                    android:text="ID triażysty"
-                    android:textSize="20sp" />
-
-            </TableRow>
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:id="@+id/idtriage"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="@string/_0"
-                    android:textSize="54sp" />
-
-            </TableRow>
-
-        </LinearLayout>
-
-    </TableRow>
+        <Button
+            android:id="@+id/btn_send"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="0.2"
+            android:text="send" />
 
 
+    </LinearLayout>
 </LinearLayout>

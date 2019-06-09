@@ -11,4 +11,7 @@
     <string name="nawr_t_kapilarny">NAWRÓT KAPILARNY</string>
     <string name="oddech_w_na_minute">ODDECHÓW NA MINUTE</string>
     <string name="open">Open</string>
+    <string name="none_paired">None paired</string>
+    <string name="none_found">None Found</string>
+    <string name="connect">Connect</string>
 </resources>
